@@ -1,13 +1,14 @@
 "use client";
 import "reflect-metadata";
 import useGetThread from "@/hooks/threads/use-get-thread";
-import { Container, Flex, Text } from "@mantine/core";
+import { Button, Container, Flex, Text, Textarea } from "@mantine/core";
 import { plainToInstance } from "class-transformer";
 import { useParams } from "next/navigation";
 import Thread from "@/models/thread";
+import HorizontalVoteComponent from "@/components/HorizontalVoteComponent";
 
 export default function ThreadDetail() {
-  const token = sessionStorage.getItem("token");
+  const token = window.sessionStorage.getItem("token");
   const params = useParams();
   console.log(params);
 
@@ -28,11 +29,26 @@ export default function ThreadDetail() {
 
   return (
     <Container p={40}>
-      <Flex direction="column" gap={10}>
+      <Flex direction="column" gap={20}>
         <Text style={{ fontSize: 20, fontWeight: 700 }}>
           {singleThread.title}
         </Text>
         <Text>{singleThread.body}</Text>
+        <HorizontalVoteComponent />
+        <Textarea
+          resize="vertical"
+          placeholder="Write a comment"
+          maxRows={15}
+        />
+        <Button color="red" me={20} h={30} w={100} size="xs">
+          Post
+        </Button>
+
+        {
+            singleThread.comments.map(comment => (
+                <Text key={comment.id}>{comment.content}</Text>
+            ))
+        }
       </Flex>
     </Container>
   );

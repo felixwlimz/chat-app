@@ -3,6 +3,7 @@ import "reflect-metadata";
 import { Button, Card, Center, Flex, Group, PasswordInput, TextInput, Title, UnstyledButton } from "@mantine/core";
 import { Form, useForm } from "@mantine/form";
 import { useRouter } from "next/navigation";
+import useRegister, { RegisterRequest } from "@/hooks/users/use-register";
 
 export default function RegisterPage() {
   const form = useForm({
@@ -12,9 +13,29 @@ export default function RegisterPage() {
       email: "",
       password: "",
     },
+    validate: {
+      email: (value: string) => {
+        if (!value.trim()) {
+          return "Email must not be empty ";
+        }
+        if (!/^\S+@\S+\.\S+$/.test(value)) {
+          return "Please enter valid email";
+        }
+
+        return null;
+      },
+      name : (value : string) => value === '' ? 'Name must not be empty' : null,
+      
+    },
   });
 
   const router = useRouter()
+  const { register } = useRegister()
+
+  const handleRegister = (req : RegisterRequest) => {
+     form.validate()
+
+  }
 
   return (
     <Center p={20}>

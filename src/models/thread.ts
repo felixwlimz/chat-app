@@ -1,6 +1,7 @@
 import { Type } from "class-transformer";
 import User from "./user";
 import Vote from "./vote";
+import Comment from './comment'
 
 export default class Thread {
   id: string;

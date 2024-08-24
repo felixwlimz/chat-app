@@ -1,6 +1,5 @@
 "use client";
 import { Card, Flex, Text, Group, Badge, UnstyledButton } from "@mantine/core";
-import VoteComponent from "./VerticalVoteComponent";
 import { IoChatboxEllipses } from "react-icons/io5";
 import VerticalVoteComponent from "./VerticalVoteComponent";
 

@@ -57,7 +57,6 @@ export default function LoginPage() {
     <Center p={20}>
       <Card withBorder p={10}>
         <Form form={form} style={{ width: 500 }} onSubmit={val => {
-          console.log(val)
            handleLogin(val);
         }}>
           <Flex direction="column" gap={10}>
