@@ -1,6 +1,10 @@
+import "reflect-metadata";
+import "@mantine/core/styles.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import { ColorSchemeScript, MantineProvider } from "@mantine/core";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { TanstackProvider } from "@/components/TanstackProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +20,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <head>
+        <ColorSchemeScript />
+      </head>
+      <body className={inter.className}>
+        <TanstackProvider>
+          <MantineProvider>{children}</MantineProvider>
+        </TanstackProvider>
+      </body>
     </html>
   );
 }

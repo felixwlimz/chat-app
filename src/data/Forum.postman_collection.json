@@ -1,0 +1,527 @@
+{
+	"info": {
+		"_postman_id": "8c3212dc-2006-4b08-ac9c-c35f8ff3201c",
+		"name": "Forum",
+		"description": "Api Documentation\n\n[https://forum-api.dicoding.dev/v1#/](https://forum-api.dicoding.dev/v1#/)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5981562"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Nama\",\n    \"email\": \"email2@mail.com\",\n    \"password\": \"secret12\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"email2@mail.com\",\n    \"password\": \"secret12\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Me",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users/me",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Threads",
+			"item": [
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"sfadsdasd\",\n    \"body\": \"asdlki\",\n    \"category\": \"081234567890\" // string | nullable\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/threads",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"threads"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/threads",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"threads"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "detail",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/threads/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"threads",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "thread-91KocEqYPRz68MhD"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Votes",
+			"item": [
+				{
+					"name": "up-vote",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/threads/:id/up-vote",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"threads",
+								":id",
+								"up-vote"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "down-vote",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/threads/:id/down-vote",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"threads",
+								":id",
+								"down-vote"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "neutral-vote",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/threads/:id/neutral-vote",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"threads",
+								":id",
+								"neutral-vote"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "up-vote comments",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/threads/:thread_id/comments/:comment_id/up-vote",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"threads",
+								":thread_id",
+								"comments",
+								":comment_id",
+								"up-vote"
+							],
+							"variable": [
+								{
+									"key": "thread_id",
+									"value": ""
+								},
+								{
+									"key": "comment_id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "down-vote comment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/threads/:thread_id/comments/:comment_id/down-vote",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"threads",
+								":thread_id",
+								"comments",
+								":comment_id",
+								"down-vote"
+							],
+							"variable": [
+								{
+									"key": "thread_id",
+									"value": ""
+								},
+								{
+									"key": "comment_id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "neutral-vote comment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/threads/:thread_id/comments/:comment_id/neutral-vote",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"threads",
+								":thread_id",
+								"comments",
+								":comment_id",
+								"neutral-vote"
+							],
+							"variable": [
+								{
+									"key": "thread_id",
+									"value": ""
+								},
+								{
+									"key": "comment_id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comments",
+			"item": [
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"sfadsdasd\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/threads/:id/comments",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"threads",
+								":id",
+								"comments"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user list",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/users",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "leaderboards",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/leaderboards",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"leaderboards"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{forum_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"postman.clearEnvironmentVariable(\"forum_token\");",
+					"tests[\"Status code is 200\"] = responseCode.code === 200;",
+					"var jsonData = JSON.parse(responseBody);",
+					"postman.setEnvironmentVariable(\"forum_token\", jsonData.data.token);",
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://forum-api.dicoding.dev/v1",
+			"type": "string"
+		}
+	]
+}
