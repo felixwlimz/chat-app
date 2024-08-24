@@ -1,4 +1,4 @@
-
+import "reflect-metadata";
 import "@mantine/core/styles.css";
 
 import type { AppProps } from "next/app";

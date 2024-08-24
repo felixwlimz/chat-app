@@ -1,7 +1,7 @@
 import { Flex, Group, Text, UnstyledButton } from "@mantine/core"
 import { FaChevronDown, FaChevronUp } from "react-icons/fa"
 
-const VoteComponent = ({counter} : {counter : number}) => {
+const VerticalVoteComponent = ({counter} : {counter : number}) => {
 
     return (
       <Group>
@@ -18,4 +18,4 @@ const VoteComponent = ({counter} : {counter : number}) => {
     );
 }
 
-export default VoteComponent
+export default VerticalVoteComponent

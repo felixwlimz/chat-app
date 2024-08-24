@@ -15,11 +15,11 @@ export default function useGetAllThreads(token : string){
         return await response.json();
     }, [token])
 
-    const { data : threads, isLoading, isError } = useQuery({
+    const { data : threadsResponse, isLoading, isError } = useQuery({
         queryKey : ['threads'],
         queryFn : getAllThreads
     })
 
-    return { threads, isLoading, isError }
+    return { threadsResponse , isLoading, isError }
 
 }

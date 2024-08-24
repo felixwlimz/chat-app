@@ -1,4 +1,5 @@
 "use client";
+import "reflect-metadata";
 import useLogin, { LoginRequest } from "@/hooks/users/use-login";
 import {
   Button,

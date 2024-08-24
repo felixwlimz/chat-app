@@ -1,4 +1,5 @@
 "use client";
+import "reflect-metadata";
 import { Button, Card, Center, Flex, Group, PasswordInput, TextInput, Title, UnstyledButton } from "@mantine/core";
 import { Form, useForm } from "@mantine/form";
 import { useRouter } from "next/navigation";
