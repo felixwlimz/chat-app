@@ -16,6 +16,7 @@ import useUpVote from "@/hooks/votes/use-up-vote";
 import useDownVote from "@/hooks/votes/use-down-vote";
 import protectedRoute from "@/middleware/protected-route";
 import { Loading } from "@/loading";
+import { useMemo, useState } from "react";
 
 export type NewThreadRequest = {
   title: string;
@@ -25,6 +26,7 @@ export type NewThreadRequest = {
 
 function Home() {
   const token = window.sessionStorage.getItem("token");
+  const [query, setQuery] = useState("");
   const { threadsResponse, isLoading, isError } = useGetAllThreads(token!);
   const { createThread } = useCreateThread(token!);
   const { upVote } = useUpVote(token!);
@@ -60,7 +62,7 @@ function Home() {
   };
 
   if (isLoading) {
-    return <Loading/>;
+    return <Loading />;
   }
   if (isError || !token) {
     return <Text>Error</Text>;
@@ -70,12 +72,19 @@ function Home() {
     Thread,
     (threadsResponse.data.threads as Thread[]) ?? []
   );
-  console.log(threads);
+
+  const filteredSearch: Thread[] = threads.filter((thread) =>
+    thread.title.toLowerCase().includes(query)
+  );
 
   return (
     <>
       <Container p={20}>
-        <Navbar onClick={toggle} />
+        <Navbar
+          onClick={toggle}
+          onChange={(e) => setQuery(e.target.value)}
+          search={query}
+        />
         <AddThreadDialog
           form={form}
           opened={opened}
@@ -83,7 +92,7 @@ function Home() {
           onSubmit={(val: NewThreadRequest) => onSubmit(val)}
         />
         <Flex direction="column" mt={30} gap={10}>
-          {threads.map((thread) => (
+          {filteredSearch.map((thread) => (
             <CommentCard
               key={thread.id}
               title={thread.title}
@@ -119,5 +128,4 @@ function Home() {
   );
 }
 
-
-export default protectedRoute(Home)
+export default protectedRoute(Home);
