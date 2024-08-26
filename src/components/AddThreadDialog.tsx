@@ -29,11 +29,11 @@ const AddThreadDialog = ({form, opened, onClose, onSubmit} : AddThreadDialogProp
         opened={opened}
         withCloseButton
         onClose={onClose}
-        size="lg"
+        size="xl"
         radius="md"
-        position={{ top : 50, left : 400}}
+        position={{ top : 70, left : 350}}
       >
-        <Text size="md" fw="700">
+        <Text size="lg" fw="700">
           Add New Thread
         </Text>
         <Form form={form} onSubmit={(val : NewThreadRequest) => onSubmit(val)}>

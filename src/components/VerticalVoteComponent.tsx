@@ -1,21 +1,30 @@
-import { Flex, Group, Text, UnstyledButton } from "@mantine/core"
-import { FaChevronDown, FaChevronUp } from "react-icons/fa"
+import { Flex, Group, Text, UnstyledButton } from "@mantine/core";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
-const VerticalVoteComponent = ({counter} : {counter : number}) => {
+export type VerticalVoteProps = {
+  counter: number;
+  onUpVote: () => void;
+  onDownVote: () => void;
+};
 
-    return (
-      <Group>
-        <Text>{counter}</Text>
-        <Flex direction="column">
-          <UnstyledButton>
-            <FaChevronUp />
-          </UnstyledButton>
-          <UnstyledButton>
-            <FaChevronDown />
-          </UnstyledButton>
-        </Flex>
-      </Group>
-    );
-}
+const VerticalVoteComponent = ({
+  counter,
+  onUpVote,
+  onDownVote,
+}: VerticalVoteProps) => {
+  return (
+    <Group>
+      <Text>{counter}</Text>
+      <Flex direction="column">
+        <UnstyledButton onClick={onUpVote}>
+          <FaChevronUp />
+        </UnstyledButton>
+        <UnstyledButton onClick={onDownVote}>
+          <FaChevronDown />
+        </UnstyledButton>
+      </Flex>
+    </Group>
+  );
+};
 
-export default VerticalVoteComponent
+export default VerticalVoteComponent;

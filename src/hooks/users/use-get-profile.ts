@@ -16,13 +16,13 @@ export default function useGetProfile(token: string) {
   }, [token]);
 
   const {
-    data: users,
+    data: user,
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["user", "me"],
     queryFn: getUser,
   });
 
-  return { users, isLoading, isError };
+  return { user, isLoading, isError };
 }

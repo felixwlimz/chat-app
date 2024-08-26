@@ -11,6 +11,8 @@ export default class Thread {
   
   createdAt : string 
 
+  totalComments : number
+
   @Type(() => User)
   owner : User 
 

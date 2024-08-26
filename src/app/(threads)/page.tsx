@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import "reflect-metadata";
 import CommentCard from "@/components/CommentCard";
 import Navbar from "@/components/Navbar";
@@ -12,20 +12,24 @@ import { useDisclosure } from "@mantine/hooks";
 import AddThreadDialog from "@/components/AddThreadDialog";
 import useCreateThread from "@/hooks/threads/use-create-thread";
 import { useQueryClient } from "@tanstack/react-query";
+import useUpVote from "@/hooks/votes/use-up-vote";
+import useDownVote from "@/hooks/votes/use-down-vote";
 
 export type NewThreadRequest = {
-  title : string,
-  body : string, 
-  category : string 
-}
+  title: string;
+  body: string;
+  category: string;
+};
 
 export default function Home() {
-  const token = window.sessionStorage.getItem('token');
-  const { threadsResponse, isLoading, isError } = useGetAllThreads(token!)
-  const { createThread } = useCreateThread(token!)
+  const token = window.sessionStorage.getItem("token");
+  const { threadsResponse, isLoading, isError } = useGetAllThreads(token!);
+  const { createThread } = useCreateThread(token!);
+  const { upVote } = useUpVote(token!);
+  const { downVote } = useDownVote(token!);
   const router = useRouter();
   const [opened, { toggle, close }] = useDisclosure(false);
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const form = useForm({
     mode: "uncontrolled",
     initialValues: {
@@ -33,52 +37,78 @@ export default function Home() {
       body: "",
       category: "",
     },
-    validate : {
-      title : (value : string) => value === '' ? 'Title must not be empty' : null ,
-      body : (value : string) => value === '' ? 'Body must not be empty' : null 
-    }
+    validate: {
+      title: (value: string) =>
+        value === "" ? "Title must not be empty" : null,
+      body: (value: string) => (value === "" ? "Body must not be empty" : null),
+    },
   });
 
-  const onSubmit = (req : NewThreadRequest) => {
-    form.validate()
-    console.log(req)
+  const onSubmit = (req: NewThreadRequest) => {
+    form.validate();
+    console.log(req);
     createThread(req, {
-      onSuccess : (data) => {
-         console.log(data)
-         queryClient.refetchQueries({
-          queryKey : ['threads']
-         })
-      }
-    })
-  }
-  
+      onSuccess: (data) => {
+        console.log(data);
+        queryClient.refetchQueries({
+          queryKey: ["threads"],
+        });
+      },
+    });
+  };
 
- 
-  if(isLoading){
-    return <Text>Loading</Text>
+  if (isLoading) {
+    return <Text>Loading</Text>;
   }
-  if(isError || !token) {
-    return <Text>Error</Text>
+  if (isError || !token) {
+    return <Text>Error</Text>;
   }
 
-  const threads = plainToInstance(Thread, (threadsResponse.data.threads as Thread[]) ?? [])
-  console.log(threads)
-  
+  const threads = plainToInstance(
+    Thread,
+    (threadsResponse.data.threads as Thread[]) ?? []
+  );
+  console.log(threads);
+
   return (
     <>
       <Container p={20}>
         <Navbar onClick={toggle} />
-        <AddThreadDialog form={form} opened={opened} onClose={close} onSubmit={(val : NewThreadRequest) => onSubmit(val)}/>
+        <AddThreadDialog
+          form={form}
+          opened={opened}
+          onClose={close}
+          onSubmit={(val: NewThreadRequest) => onSubmit(val)}
+        />
         <Flex direction="column" mt={30} gap={10}>
           {threads.map((thread) => (
             <CommentCard
               key={thread.id}
               title={thread.title}
-              counter={0}
+              counter={thread.upVotesBy.length}
               description={thread.body}
               category={thread.category}
-              date={thread.createdAt}
+              date={new Date(thread.createdAt).toDateString()}
               onChatClick={() => router.push(`/${thread.id}`)}
+              commentLength={thread.totalComments}
+              onUpVote={() =>
+                upVote(thread.id, {
+                  onSuccess: () => {
+                    queryClient.refetchQueries({
+                      queryKey: ["threads"],
+                    });
+                  },
+                })
+              }
+              onDownVote={() =>
+                downVote(thread.id, {
+                  onSuccess: () => {
+                    queryClient.refetchQueries({
+                      queryKey: ["threads"],
+                    });
+                  },
+                })
+              }
             />
           ))}
         </Flex>

@@ -8,8 +8,7 @@ export default class Comment {
   id: string;
   content: string;
 
-  @Type(() => Date)
-  createdAt: Date;
+  createdAt: string;
 
   @Type(() => Vote)
   upVotesBy: Vote[];

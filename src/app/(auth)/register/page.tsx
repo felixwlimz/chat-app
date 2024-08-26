@@ -1,6 +1,16 @@
 "use client";
 import "reflect-metadata";
-import { Button, Card, Center, Flex, Group, PasswordInput, TextInput, Title, UnstyledButton } from "@mantine/core";
+import {
+  Button,
+  Card,
+  Center,
+  Flex,
+  Group,
+  PasswordInput,
+  TextInput,
+  Title,
+  UnstyledButton,
+} from "@mantine/core";
 import { Form, useForm } from "@mantine/form";
 import { useRouter } from "next/navigation";
 import useRegister, { RegisterRequest } from "@/hooks/users/use-register";
@@ -24,23 +34,33 @@ export default function RegisterPage() {
 
         return null;
       },
-      name : (value : string) => value === '' ? 'Name must not be empty' : null,
-      
+      name: (value: string) => (value === "" ? "Name must not be empty" : null),
     },
   });
 
-  const router = useRouter()
-  const { register } = useRegister()
+  const router = useRouter();
+  const { register } = useRegister();
 
-  const handleRegister = (req : RegisterRequest) => {
-     form.validate()
-
-  }
+  const handleRegister = (req: RegisterRequest) => {
+    form.validate();
+    register(req, {
+      onSuccess: () => {
+        router.push("/login");
+      },
+      onError: () => {
+        router.push("/register");
+      },
+    });
+  };
 
   return (
     <Center p={20}>
       <Card withBorder p={10}>
-        <Form form={form} style={{ width: 500 }}>
+        <Form
+          form={form}
+          style={{ width: 500 }}
+          onSubmit={(val) => handleRegister(val)}
+        >
           <Flex direction="column" gap={10}>
             <Title order={3}>Register</Title>
             <TextInput
