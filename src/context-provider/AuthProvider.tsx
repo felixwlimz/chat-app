@@ -14,7 +14,7 @@ export const AuthProvider = ({children} : { children : JSX.Element}) => {
     const token = sessionStorage.getItem('token')!
     const router = useRouter()
     useEffect(() => {
-      if(!token){
+      if(token === null || token === ''){
         router.push('/login')
       }
     }, [router, token])
