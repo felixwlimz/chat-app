@@ -14,6 +14,8 @@ import useCreateThread from "@/hooks/threads/use-create-thread";
 import { useQueryClient } from "@tanstack/react-query";
 import useUpVote from "@/hooks/votes/use-up-vote";
 import useDownVote from "@/hooks/votes/use-down-vote";
+import protectedRoute from "@/middleware/protected-route";
+import { Loading } from "@/loading";
 
 export type NewThreadRequest = {
   title: string;
@@ -21,7 +23,7 @@ export type NewThreadRequest = {
   category: string;
 };
 
-export default function Home() {
+function Home() {
   const token = window.sessionStorage.getItem("token");
   const { threadsResponse, isLoading, isError } = useGetAllThreads(token!);
   const { createThread } = useCreateThread(token!);
@@ -58,7 +60,7 @@ export default function Home() {
   };
 
   if (isLoading) {
-    return <Text>Loading</Text>;
+    return <Loading/>;
   }
   if (isError || !token) {
     return <Text>Error</Text>;
@@ -116,3 +118,6 @@ export default function Home() {
     </>
   );
 }
+
+
+export default protectedRoute(Home)

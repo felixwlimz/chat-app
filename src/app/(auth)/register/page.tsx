@@ -47,7 +47,8 @@ export default function RegisterPage() {
       onSuccess: () => {
         router.push("/login");
       },
-      onError: () => {
+      onError: (err) => {
+        console.log(err)
         router.push("/register");
       },
     });
@@ -59,7 +60,10 @@ export default function RegisterPage() {
         <Form
           form={form}
           style={{ width: 500 }}
-          onSubmit={(val) => handleRegister(val)}
+          onSubmit={(val) => {
+            console.log(val)
+            handleRegister(val);
+          }}
         >
           <Flex direction="column" gap={10}>
             <Title order={3}>Register</Title>

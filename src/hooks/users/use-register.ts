@@ -12,11 +12,10 @@ export default function useRegister() {
     const register = await ky.post(
       "https://forum-api.dicoding.dev/v1/register",
       {
-        body: JSON.stringify(req),
+        json : req,
       }
     );
-
-    return register.json();
+    return await register.json();
   }, []);
 
   const { mutate: register } = useMutation({

@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import { TanstackProvider } from "@/components/TanstackProvider";
+import { AuthProvider } from "@/context-provider/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +25,9 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <TanstackProvider>
-          <MantineProvider>{children}</MantineProvider>
+          <AuthProvider>
+            <MantineProvider>{children}</MantineProvider>
+          </AuthProvider>
         </TanstackProvider>
       </body>
     </html>

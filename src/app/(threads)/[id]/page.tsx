@@ -10,8 +10,10 @@ import CommentSection from "@/components/CommentSection";
 import useAddComment from "@/hooks/comments/use-add-comment";
 import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import protectedRoute from "@/middleware/protected-route";
+import { Loading } from "@/loading";
 
-export default function ThreadDetail() {
+function ThreadDetail() {
   const token = window.sessionStorage.getItem("token");
   const params = useParams();
   const [comment, setComment] = useState("");
@@ -36,7 +38,7 @@ export default function ThreadDetail() {
   };
 
   if (isLoading) {
-    return <Text>Loading</Text>;
+    return <Loading/>;
   }
   if (isError && !token) {
     return <Text>Error</Text>;
@@ -88,3 +90,5 @@ export default function ThreadDetail() {
     </Container>
   );
 }
+
+export default protectedRoute(ThreadDetail)
