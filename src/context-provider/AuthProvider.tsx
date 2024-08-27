@@ -11,10 +11,10 @@ export const AuthContext = createContext<AuthContextType | null>(null)
 
 export const AuthProvider = ({children} : { children : JSX.Element}) => {
     
-    const token = sessionStorage.getItem('token')!
+    const token = sessionStorage.getItem('token')
     const router = useRouter()
     useEffect(() => {
-      if(token === null || token === ''){
+      if(token === '' || token === null){
         router.push('/login')
       }
     }, [router, token])

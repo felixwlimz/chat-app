@@ -9,7 +9,7 @@ export default function protectedRoute(WrappedComponent){
         const router = useRouter()
 
         useEffect(() => {
-            if(!token){
+            if(token === null || token === ''){
                router.push('/login')
             }
         }, [router, token])
