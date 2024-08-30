@@ -5,20 +5,21 @@ import { Loading } from "@/loading";
 import protectedRoute from "@/middleware/protected-route";
 import User from "@/models/user";
 import {
-  Box,
   Button,
   Container,
   Flex,
   Group,
-  Image,
   Text,
   UnstyledButton,
 } from "@mantine/core";
 import { plainToInstance } from "class-transformer";
 import { useRouter } from "next/navigation";
 import ProfileFragment from "@/components/fragments/ProfileFragment";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import SettingsFragment from "@/components/fragments/SettingsFragment";
+import LeaderboardFragment from "@/components/fragments/LeaderboardFragment";
+import useLeaderboard from "@/hooks/leaderboards/use-leaderboard";
+import Leaderboard from "@/models/leaderboard";
 
 function ProfilePage() {
   const token = sessionStorage.getItem("token");
@@ -26,6 +27,9 @@ function ProfilePage() {
   const { user, isLoading, isError } = useGetProfile(token!);
   const buttons = ["Profile", "Settings", "Leaderboards", "Logout"];
   const [value, setValue] = useState("Profile");
+  const { leaderboardsData, leaderboardsLoading, leaderboardsError } = useLeaderboard(token!)
+
+  console.log(leaderboardsData)
 
   const fragment = () => {
     switch (value) {
@@ -39,17 +43,26 @@ function ProfilePage() {
         );
       case "Settings":
         return <SettingsFragment />;
+      case "Leaderboard":
+        return <LeaderboardFragment leaderboards={leaderboards}/>;
     }
   };
 
-  if (isLoading) {
+  if (isLoading || leaderboardsLoading ) {
     return <Loading />;
   }
 
-  if (isError) {
+  if (isError || leaderboardsError ) {
     return <Text>Error</Text>;
   }
   const singleUser = plainToInstance(User, user.data.user);
+  const leaderboards =
+    plainToInstance(
+      Leaderboard,
+      leaderboardsData.data.leaderboards as Leaderboard[]
+    ) ?? [];
+
+    console.log(leaderboards)
 
   return (
     <Container p={20}>

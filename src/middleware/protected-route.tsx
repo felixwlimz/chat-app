@@ -8,12 +8,13 @@ export default function protectedRoute(WrappedComponent){
         const { token } = useAuth()
         const router = useRouter()
 
+
         useEffect(() => {
             if(!token){
                router.push('/login')
             }
         }, [router, token])
 
-        return token ? <WrappedComponent {...props} /> : null
+        return !!token ? <WrappedComponent {...props} /> : null
     }
 }
