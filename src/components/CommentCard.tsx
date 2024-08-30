@@ -35,7 +35,11 @@ const CommentCard = ({
         />
         <Flex direction="column" gap={8}>
           <Group>
-            <Text style={{ fontSize: 20, fontWeight: 700 }} w={700}>
+            <Text
+              style={{ fontSize: 20, fontWeight: 700, cursor: "pointer" }}
+              onClick={onChatClick}
+              w={700}
+            >
               {title}
             </Text>
             <Text>{date}</Text>

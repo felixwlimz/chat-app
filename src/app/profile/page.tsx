@@ -5,7 +5,7 @@ import { Loading } from "@/loading";
 import protectedRoute from "@/middleware/protected-route";
 import User from "@/models/user";
 import {
-    Box,
+  Box,
   Button,
   Container,
   Flex,
@@ -16,11 +16,31 @@ import {
 } from "@mantine/core";
 import { plainToInstance } from "class-transformer";
 import { useRouter } from "next/navigation";
+import ProfileFragment from "@/components/fragments/ProfileFragment";
+import { useMemo, useState } from "react";
+import SettingsFragment from "@/components/fragments/SettingsFragment";
 
 function ProfilePage() {
   const token = sessionStorage.getItem("token");
   const router = useRouter();
   const { user, isLoading, isError } = useGetProfile(token!);
+  const buttons = ["Profile", "Settings", "Leaderboards", "Logout"];
+  const [value, setValue] = useState("Profile");
+
+  const fragment = () => {
+    switch (value) {
+      case "Profile":
+        return (
+          <ProfileFragment
+            avatar={singleUser.avatar}
+            name={singleUser.name}
+            email={singleUser.email}
+          />
+        );
+      case "Settings":
+        return <SettingsFragment />;
+    }
+  };
 
   if (isLoading) {
     return <Loading />;
@@ -29,9 +49,7 @@ function ProfilePage() {
   if (isError) {
     return <Text>Error</Text>;
   }
-
-  const singleUser = plainToInstance(User, user.data.user)
-  console.log(singleUser)
+  const singleUser = plainToInstance(User, user.data.user);
 
   return (
     <Container p={20}>
@@ -46,12 +64,17 @@ function ProfilePage() {
 
       <Flex direction="row" gap={100} mt={70}>
         <Flex direction="column" gap={20}>
-          <UnstyledButton style={{ fontSize: 20 }}>Profile</UnstyledButton>
-          <UnstyledButton style={{ fontSize: 20 }}>Settings</UnstyledButton>
-          <UnstyledButton style={{ fontSize: 20 }}>Logout</UnstyledButton>
+          {buttons.map((button, index) => (
+            <UnstyledButton
+              key={index}
+              style={{ fontSize: 20 }}
+              onClick={() => setValue(button)}
+            >
+              {button}
+            </UnstyledButton>
+          ))}
         </Flex>
-
-      
+        {fragment()}
       </Flex>
     </Container>
   );
